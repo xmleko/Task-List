@@ -1,5 +1,6 @@
 import tkinter as tk
 from add_task_window import AddTaskWindow
+from delete_task_window import DeleteTaskWindow
 from tkinter import Button
 from controller import Controller
 
@@ -29,7 +30,26 @@ class MainWindow(tk.Tk):
         self.button_add = Button(self, text="Add Task", width=10, height=3, command=self.open_add_task_window)
         self.button_add.place(x=20, y=20)
 
+    def update_task_list(self):
+        for index, task in enumerate(self.controller.tasks):
+            self.number = tk.Label(self, text=str(1 + index))
+            self.number.grid(row=1+index, column=0, padx=20, pady=1)
+            self.task_name = tk.Label(self, text=task.strip())
+            self.task_name.grid(row=1+index, column=1, padx=50, pady=1)
+            self.status = tk.Label(self, text="Awaiting")
+            self.status.grid(row=1+index, column=2, padx=50, pady=1)
+            self.edit = tk.Button(self, text="Edit")
+            self.edit.grid(row=1+index, column=3, padx=50, pady=1)
+            self.remove = tk.Button(self, text="Delete", command= lambda:self.open_delete_task_window(index))
+            self.remove.grid(row=1+index, column=4, padx=50, pady=1)
+
     def open_add_task_window(self):
-        add_task_window = AddTaskWindow(self.controller)
+        open = AddTaskWindow(self.controller, self)
+
+    def open_edit_task_window(self):
+        pass
+    def open_delete_task_window(self, idx):
+        open = DeleteTaskWindow()
+
 
 
