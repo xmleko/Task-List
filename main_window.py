@@ -1,7 +1,7 @@
 import tkinter as tk
 from add_task_window import AddTaskWindow
 from delete_task_window import DeleteTaskWindow
-from tkinter import Button
+from edit_task_window import EditTaskWindow
 from controller import Controller
 
 class MainWindow(tk.Tk):
@@ -27,18 +27,22 @@ class MainWindow(tk.Tk):
         self.remove_label.grid(row = 0, column = 4, padx=50, pady=120)
 
     def button_add_task(self):
-        self.button_add = Button(self, text="Add Task", width=10, height=3, command=self.open_add_task_window)
-        self.button_add.place(x=20, y=20)
+        self.button_add = tk.Button(self, text="Add Task", width=20, height=3, command=self.open_add_task_window)
+        self.button_add.place(x=230, y=20)
 
     def update_task_list(self):
+        for widget in self.grid_slaves():
+            if int(widget.grid_info()["row"]) > 0:
+                widget.grid_forget()
+
         for index, task in enumerate(self.controller.tasks):
             self.number = tk.Label(self, text=str(1 + index))
             self.number.grid(row=1+index, column=0, padx=20, pady=1)
-            self.task_name = tk.Label(self, text=task.strip())
+            self.task_name = tk.Label(self, text=task["name"].strip())
             self.task_name.grid(row=1+index, column=1, padx=50, pady=1)
-            self.status = tk.Label(self, text="Awaiting")
+            self.status = tk.Label(self, text=task["status"])
             self.status.grid(row=1+index, column=2, padx=50, pady=1)
-            self.edit = tk.Button(self, text="Edit")
+            self.edit = tk.Button(self, text="Edit", command= lambda:self.open_edit_task_window(index))
             self.edit.grid(row=1+index, column=3, padx=50, pady=1)
             self.remove = tk.Button(self, text="Delete", command= lambda:self.open_delete_task_window(index))
             self.remove.grid(row=1+index, column=4, padx=50, pady=1)
@@ -46,10 +50,10 @@ class MainWindow(tk.Tk):
     def open_add_task_window(self):
         open = AddTaskWindow(self.controller, self)
 
-    def open_edit_task_window(self):
-        pass
-    def open_delete_task_window(self, idx):
-        open = DeleteTaskWindow()
+    def open_edit_task_window(self, index):
+        open = EditTaskWindow(self, index, self.controller)
+    def open_delete_task_window(self, index):
+        open = DeleteTaskWindow(self, index, self.controller)
 
 
 

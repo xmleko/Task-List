@@ -22,8 +22,9 @@ class AddTaskWindow(tk.Toplevel):
 
     def send_task(self):
         task = self.description.get("1.0", tk.END)
-        self.controller.add_task(task)
+        self.controller.add_task(task, "Awaiting")
         self.main_window.update_task_list()
+        self.destroy()
 
 
 
