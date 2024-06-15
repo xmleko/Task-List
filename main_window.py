@@ -46,7 +46,7 @@ class MainWindow(tk.Tk):
         self.task_canvas = tk.Canvas(self.task_frame, bg='white', bd=0, highlightthickness=0,
                                      yscrollcommand=self.scrollbar.set)
         self.task_canvas.grid(row=0, column=0, sticky='nsew')
-
+#
         self.scrollbar.config(command=self.task_canvas.yview)
 
         self.task_list_frame = tk.Frame(self.task_canvas, bg='white')
