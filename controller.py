@@ -8,6 +8,5 @@ class Controller:
     def edit_task(self, index, task, status):
         self.tasks[index] = {"name": task, "status": status}
 
-
     def delete_task(self, index):
         del self.tasks[index]
