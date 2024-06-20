@@ -3,18 +3,20 @@ class DeleteTaskWindow(tk.Toplevel):
     def __init__(self, parent, index, controller):
         super().__init__()
         self.title("Delete Task")
-        self.geometry("400x270")
+        self.geometry("430x270")
         self.parent = parent
         self.index = index
         self.controller = controller
         self.create_widgets()
 
     def create_widgets(self):
-        label = tk.Label(self, width=40, height=5, text="Are you sure you want to delete this task?")
+        self.icon_yes = tk.PhotoImage(file="icon/ok.png")
+        self.icon_no = tk.PhotoImage(file="icon/no.png")
+        label = tk.Label(self, width=40, height=5, text="Are you sure you want to delete this task?", font=("Arial", 15, "bold"))
         label.pack()
-        button_accept = tk.Button(self, width= 25, height=2, text="Yes", command = self.confirm_delete)
+        button_accept = tk.Button(self, image = self.icon_yes, command = self.confirm_delete)
         button_accept.pack()
-        button_cancel = tk.Button(self, width= 25, height=2, text="No", command = self.cancel_delete)
+        button_cancel = tk.Button(self, image=self.icon_no, command = self.cancel_delete)
         button_cancel.pack()
 
     def confirm_delete(self):
