@@ -11,14 +11,14 @@ class AddTaskWindow(tk.Toplevel):
         self.create_widgets()
 
     def create_widgets(self):
-        self.title_label = tk.Label(self, width=3, height=3, font=("Arial", 14),  text="Title")
-        self.title_label.pack()
+        title_label = tk.Label(self, width=3, height=3, font=("Arial", 14),  text="Title")
+        title_label.pack()
         self.description = tk.Text(self, width=35, height=5, font=("Arial", 14))
         self.description.pack()
-        self.space_label = tk.Label(self, height=1)
-        self.space_label.pack()
-        self.button_add = tk.Button(self, width=8, height=2, font=("Arial", 12),  text="Add Task", command = self.send_task)
-        self.button_add.pack()
+        space_label = tk.Label(self, height=1)
+        space_label.pack()
+        button_add = tk.Button(self, width=8, height=2, font=("Arial", 12),  text="Add Task", command = self.send_task)
+        button_add.pack()
 
     def send_task(self):
         task = self.description.get("1.0", tk.END)
