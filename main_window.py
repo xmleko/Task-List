@@ -4,11 +4,10 @@ from delete_task_window import DeleteTaskWindow
 from edit_task_window import EditTaskWindow
 from controller import Controller
 import datetime
-from tkinter import messagebox
+from notify import Notify
 
 
 class MainWindow(tk.Tk):
-
     def __init__(self):
         super().__init__()
         self.geometry("800x490")
@@ -21,6 +20,8 @@ class MainWindow(tk.Tk):
         self.refresh_time()
         self.controller.read_task_file()
         self.update_task_list()
+        self.notification = Notify()
+        self.notification.show_notification(self.controller)
         self.protocol("WM_DELETE_WINDOW", self.on_destroy)
 
     def create_task_list(self):
