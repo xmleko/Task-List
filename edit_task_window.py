@@ -1,4 +1,3 @@
-import tkinter
 import tkinter as tk
 from tkinter import messagebox
 
@@ -30,6 +29,7 @@ class EditTaskWindow(tk.Toplevel):
         confirm = tk.Button(self, image=self.icon, command=self.confirm_change)
         confirm.pack()
 
+
     def confirm_change(self):
         try:
             task = self.task_text.get("1.0", tk.END).strip()
@@ -37,6 +37,13 @@ class EditTaskWindow(tk.Toplevel):
             status = self.status_text.get(status_index)
             self.controller.edit_task(self.index, task, status)
             self.parent.update_task_list()
+            match status:
+                case "Awaiting":
+                    self.parent.change_status_label_color(self.index, "#BBC092")
+                case "In Progress":
+                    self.parent.change_status_label_color(self.index, "#E0F64F")
+                case "Finished":
+                    self.parent.change_status_label_color(self.index, "#519131")
             self.destroy()
         except:
-            tkinter.messagebox.showinfo("Error", "Please select status task")
+            tk.messagebox.showinfo("Error", "Please select status task")

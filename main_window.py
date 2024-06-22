@@ -15,6 +15,7 @@ class MainWindow(tk.Tk):
         self.resizable(False, False)
         self.create_task_list()
         self.button_add_task()
+        self.status_labels = []
         self.refresh_time()
 
     def create_task_list(self):
@@ -22,15 +23,15 @@ class MainWindow(tk.Tk):
         disc.place(x=150, y=350)
         self.time = tk.Label(self, text="Current time: " + str(datetime.datetime.now()), font=50)
         self.time.place(x=150, y=400)
-        number_label = tk.Label(self, text="#")
+        number_label = tk.Label(self, text="#", anchor="center")
         number_label.grid(row=0, column=0, padx=20, pady=20)
-        task_name_label = tk.Label(self, text="Task Name")
+        task_name_label = tk.Label(self, text="Task Name", anchor="center")
         task_name_label.grid(row=0, column=1, padx=50, pady=20)
-        status_label = tk.Label(self, text="Status")
+        status_label = tk.Label(self, text="Status", anchor="center")
         status_label.grid(row=0, column=2, padx=50, pady=20)
-        edit_label = tk.Label(self, text="Edit Task")
+        edit_label = tk.Label(self, text="Edit Task", anchor="center")
         edit_label.grid(row=0, column=3, padx=50, pady=20)
-        remove_label = tk.Label(self, text="Remove Task")
+        remove_label = tk.Label(self, text="Remove Task", anchor="center")
         remove_label.grid(row=0, column=4, padx=50, pady=20)
 
         #scrollbar canvas
@@ -76,17 +77,24 @@ class MainWindow(tk.Tk):
         for widget in self.task_list_frame.grid_slaves():
             widget.grid_forget()
 
+        self.status_labels.clear()
+
         for index, task in enumerate(self.controller.tasks):
-            number_label = tk.Label(self.task_list_frame, text=str(index + 1), bg='#E0E0E0')
+            number_label = tk.Label(self.task_list_frame, text=str(index + 1), bg='#E0E0E0', anchor="center")
             number_label.grid(row=index, column=0, padx=20, pady=1)
-            task_name_label = tk.Label(self.task_list_frame, text=task["name"].strip(), wraplength=90, bg='#E0E0E0')
+            task_name_label = tk.Label(self.task_list_frame, text=task["name"].strip(), wraplength=90, bg='#E0E0E0', anchor="center")
             task_name_label.grid(row=index, column=1, padx=50, pady=1)
-            status_label = tk.Label(self.task_list_frame, text=task["status"], bg='#E0E0E0')
+            status_label = tk.Label(self.task_list_frame, text=task["status"], bg = "#BBC092", anchor="center", borderwidth=2, relief="solid")
             status_label.grid(row=index, column=2, padx=50, pady=1)
-            edit_button = tk.Button(self.task_list_frame, text="Edit",bg='#E0E0E0',  image=self.icon_edit, command=lambda idx=index: self.open_edit_task_window(idx))
+            edit_button = tk.Button(self.task_list_frame, text="Edit",bg='#E0E0E0', anchor="center",  image=self.icon_edit, command=lambda idx=index: self.open_edit_task_window(idx))
             edit_button.grid(row=index, column=3, padx=50, pady=1)
-            remove_button = tk.Button(self.task_list_frame, text="Delete",bg='#E0E0E0', image=self.icon_del, command=lambda idx=index: self.open_delete_task_window(idx))
+            remove_button = tk.Button(self.task_list_frame, text="Delete",bg='#E0E0E0', anchor="center", image=self.icon_del, command=lambda idx=index: self.open_delete_task_window(idx))
             remove_button.grid(row=index, column=4, padx=50, pady=1)
+
+            self.status_labels.append(status_label)
+
+    def change_status_label_color(self, index, color):
+        self.status_labels[index].config(bg=color)
 
     def open_add_task_window(self):
         AddTaskWindow(self.controller, self)
@@ -96,4 +104,3 @@ class MainWindow(tk.Tk):
 
     def open_delete_task_window(self, index):
         DeleteTaskWindow(self, index, self.controller)
-
