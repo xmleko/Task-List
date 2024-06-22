@@ -12,12 +12,12 @@ class DeleteTaskWindow(tk.Toplevel):
     def create_widgets(self):
         self.icon_yes = tk.PhotoImage(file="icon/ok.png")
         self.icon_no = tk.PhotoImage(file="icon/no.png")
-        label = tk.Label(self, width=40, height=5, text="Are you sure you want to delete this task?", font=("Arial", 15, "bold"))
+        label = tk.Label(self, width=40, height=5, text="Are you sure you want to delete this task?", font=("Arial", 15, "bold"), fg="white", bg='#413F3F')
         label.pack()
         button_accept = tk.Button(self, image = self.icon_yes, command = self.confirm_delete)
-        button_accept.pack()
+        button_accept.pack(side = tk.LEFT, padx=60)
         button_cancel = tk.Button(self, image=self.icon_no, command = self.cancel_delete)
-        button_cancel.pack()
+        button_cancel.pack(side = tk.RIGHT, padx=60)
 
     def confirm_delete(self):
         self.controller.delete_task(self.index)
