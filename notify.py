@@ -15,5 +15,5 @@ class Notify:
                 )
                 toast.set_audio(audio.SMS, loop=False)
                 toast.show()
-                break
+                break # stop
 
