@@ -4,6 +4,8 @@ from delete_task_window import DeleteTaskWindow
 from edit_task_window import EditTaskWindow
 from controller import Controller
 import datetime
+from tkinter import messagebox
+
 
 class MainWindow(tk.Tk):
 
@@ -17,6 +19,9 @@ class MainWindow(tk.Tk):
         self.button_add_task()
         self.status_labels = []
         self.refresh_time()
+        self.controller.read_task_file()
+        self.update_task_list()
+        self.protocol("WM_DELETE_WINDOW", self.on_destroy)
 
     def create_task_list(self):
         disc = tk.Label(self, text="My ToDo List", font=50)
@@ -104,3 +109,7 @@ class MainWindow(tk.Tk):
 
     def open_delete_task_window(self, index):
         DeleteTaskWindow(self, index, self.controller)
+
+    def on_destroy(self):
+        self.controller.save_task_file()
+        self.destroy()
