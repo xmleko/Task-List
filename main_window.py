@@ -5,6 +5,7 @@ from edit_task_window import EditTaskWindow
 from controller import Controller
 import datetime
 from notify import Notify
+from status import Status
 
 
 class MainWindow(tk.Tk):
@@ -98,6 +99,15 @@ class MainWindow(tk.Tk):
             remove_button.grid(row=index, column=4, padx=50, pady=1)
 
             self.status_labels.append(status_label)
+
+        for x in range(len(self.controller.tasks)):
+            match self.controller.tasks[x]["status"]:
+                case Status.AWAITING.value:
+                    self.status_labels[x].config(bg ="#BBC092")
+                case Status.IN_PROGRESS.value:
+                    self.status_labels[x].config(bg ="#E0F64F")
+                case Status.FINISHED.value:
+                    self.status_labels[x].config(bg ="#519131")
 
     def change_status_label_color(self, index, color):
         self.status_labels[index].config(bg=color)
