@@ -36,13 +36,13 @@ class EditTaskWindow(tk.Toplevel):
             status = self.status_text.get(status_index)
             self.controller.edit_task(self.index, task, status)
             self.parent.update_task_list()
-            match status:
-                case Status.AWAITING.value:
-                    self.parent.change_status_label_color(self.index, "#BBC092")
-                case Status.IN_PROGRESS.value:
-                    self.parent.change_status_label_color(self.index, "#E0F64F")
-                case Status.FINISHED.value:
-                    self.parent.change_status_label_color(self.index, "#519131")
+        #   match status:
+            #    case Status.AWAITING.value:
+            #        self.parent.change_status_label_color(self.index, "#BBC092")
+            #    case Status.IN_PROGRESS.value:
+            #        self.parent.change_status_label_color(self.index, "#E0F64F")
+            #    case Status.FINISHED.value:
+            #        self.parent.change_status_label_color(self.index, "#519131")
             self.destroy()
         except:
             tk.messagebox.showinfo("Error", "Please select status task")
